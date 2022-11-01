@@ -1,16 +1,19 @@
 <template>
   <div class="container">
+    <h1 id="app-title">Todo Application</h1>
     <div class="todo-list">
       <div class="todo-input">
-        <input type="text" name="task" id="task-input" v-model="taskInput">
-        <button id="task-btn" @click="addTask">Add</button>
+        <p id="todo-title">Add new task</p>
+        <input type="text" name="task" id="task-input" v-model="taskInput" >
+        <button id="task-btn" @click="addTask">Add Task</button>
       </div>
       <div class="todo-task">
+        <h2>Tasks</h2>
         <div class="task-list" v-for="todo in todoTask" :key="todo">
           <p class="task-input">{{ todo }}</p>
           <div class="task-control">
-            <button>Edit</button>
-            <button>Delete</button>
+            <!-- <button>Edit</button> -->
+            <button id="task-delete">Delete</button>
           </div>
         </div>
       </div>
@@ -26,7 +29,7 @@ export default {
   },
   data() {
     return {
-      todoTask: ['Task 1', 'Task2', 'Task3'],
+      todoTask: ['Eat breakfast', 'Check Submissions', 'Exercise'],
       taskInput: ''
     }
   },
@@ -41,6 +44,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap');
+
+:root {
+  font-family: 'Roboto', sans-serif;
+}
+
 body {
   background-color: rgb(49, 49, 49);
 }
@@ -48,43 +57,75 @@ body {
 .container {
   padding: 1em 3em;
   
+
+  #app-title {
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 1em;
+  }
+
   .todo-list {
     width: 60%;
     margin-inline: auto;
 
     .todo-input {
-      width: 60%;
+      position: relative;
+      width: 50%;
       margin-inline: auto;
       display: flex;
-      align-items: center;
-      margin-bottom: 1em;
+      flex-direction: column;
+      gap: .5em;
+
+
+      #todo-title {
+        position: absolute;
+        top: -30px;
+        // text-transform: uppercase;
+        font-size: .9em;
+        color: white;
+        left: 0;
+      }
       #task-input {
-        width: 100%;
+        border-radius: 4px;
         padding: .5em;
+        font-size: .9rem;
+        font-weight: 900;
       }
 
       #task-btn {
         padding: .5em;
+        border-radius: 4px;
+        border: none;
+        background-color: rgb(23, 93, 93);
+        color: white;
+        font-size: .8rem;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 900;
       }
     }
 
     .todo-task {
-      width: 70%;
+      width: 50%;
       margin-inline: auto;
       color: white;
       display: flex;
       flex-direction: column;
       gap: .3em;
 
+      h2 {
+        border-bottom: 3px solid whitesmoke;
+      }
+
       .task-list {
-        padding: .2em .4em;
+        padding: .5em;
         display: flex;
         align-items: center;
         border: 2px solid gray;
+        border-radius: 8px;
 
         .task-input {
+          margin: 0;
           flex-grow: 1;
         }
 
@@ -92,6 +133,19 @@ body {
           display: flex;
           gap: .4em;
           
+          > * {
+            height: 100%;
+            border: none;
+            background-color: transparent;
+          }
+
+          #task-delete {
+            color: red;
+            text-transform: uppercase;
+            font-size: .8em;
+            font-weight: 900;
+            cursor: pointer;
+          }
         }
       }
     }
