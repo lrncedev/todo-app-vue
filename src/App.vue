@@ -9,11 +9,11 @@
       </div>
       <div class="todo-task">
         <h2>Tasks</h2>
-        <div class="task-list" v-for="todo in todoTask" :key="todo">
+        <div class="task-list" v-for="(todo, index ) in todoTask" :key="todo">
           <p class="task-input">{{ todo }}</p>
           <div class="task-control">
             <!-- <button>Edit</button> -->
-            <button id="task-delete">Delete</button>
+            <button id="task-delete" @click="removeTask(index)">Delete</button>
           </div>
         </div>
       </div>
@@ -37,6 +37,9 @@ export default {
     addTask() {
       this.todoTask.push(this.taskInput);
       this.taskInput = '';
+    },
+    removeTask(index) {
+      this.todoTask.splice(index, 1);
     }
   }
 }
