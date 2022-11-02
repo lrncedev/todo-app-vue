@@ -2,20 +2,27 @@
   <div class="container">
     <h1 id="app-title">Todo Application</h1>
     <div class="todo-list">
-      <div class="todo-input">
+      <form class="todo-input" autocomplete="off" @submit.prevent="addTask">
         <p id="todo-title">Add new task</p>
-        <input type="text" name="task" id="task-input" v-model="taskInput" >
-        <button id="task-btn" @click="addTask">Add Task</button>
-      </div>
+        <input type="text" name="task" id="task-input" v-model="taskInput" required>
+        <button type=submit id="task-btn" >Add Task</button>
+      </form>
       <div class="todo-task">
         <h2>Tasks</h2>
-        <div class="task-list" v-for="(todo, index ) in todoTask" :key="todo">
-          <p class="task-input">{{ todo }}</p>
-          <div class="task-control">
-            <!-- <button>Edit</button> -->
-            <button id="task-delete" @click="removeTask(index)">Delete</button>
+        <template v-if="Array.isArray(todoTask) && todoTask.length == 0">
+          <div>
+            <h1 class="text-center">No tasks to do for now 😁</h1>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <div class="task-list" v-for="(todo, index ) in todoTask" :key="todo">
+            <p class="task-input">{{ todo }}</p>
+            <div class="task-control">
+              <!-- <button>Edit</button> -->
+              <button id="task-delete" @click="removeTask(index)">Delete</button>
+            </div>
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -29,7 +36,7 @@ export default {
   },
   data() {
     return {
-      todoTask: ['Eat breakfast', 'Check Submissions', 'Exercise'],
+      todoTask: ['Take a bath', 'Eat breakfast', 'Jog'],
       taskInput: ''
     }
   },
@@ -40,6 +47,7 @@ export default {
     },
     removeTask(index) {
       this.todoTask.splice(index, 1);
+      console.log(this.todoTask);
     }
   }
 }
@@ -115,6 +123,11 @@ body {
       display: flex;
       flex-direction: column;
       gap: .3em;
+
+
+      .text-center {
+        text-align: center;
+      }
 
       h2 {
         border-bottom: 3px solid whitesmoke;
