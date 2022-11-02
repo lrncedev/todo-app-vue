@@ -4,8 +4,18 @@
     <div class="todo-list">
       <form class="todo-input" autocomplete="off" @submit.prevent="addTask">
         <p id="todo-title">Add new task</p>
-        <input type="text" name="task" id="task-input" v-model="taskInput" required>
-        <button type=submit id="task-btn" >Add Task</button>
+        <input type="text" name="task" id="task-input" v-model="formValues.task" required>
+        <label for="task-category">Category:</label>
+        <select name="" id="task-category" v-model="formValues.category" required>
+          <option  class=""
+            v-for="(category, index) in categories" 
+            :key="index" 
+            :value="category" 
+          >
+            {{ category }}
+          </option>
+        </select>
+        <button type=submit id="task-btn">Add Task</button>
       </form>
       <div class="todo-task">
         <h2>Tasks</h2>
@@ -15,16 +25,25 @@
           </div>
         </template>
         <template v-else>
-          <div class="task-list" v-for="(todo, index ) in todoTask" :key="todo">
-            <p class="task-input">{{ todo }}</p>
+          <div class="task-list" v-for="(todo, index ) in todoTask" :key="index">
+            <div class="task-info">
+              <p class="task-input">{{ todo.task }}</p>
+              <p class="task-cat">{{ todo.category }}</p>
+            </div>
             <div class="task-control">
-              <!-- <button>Edit</button> -->
+              <button id="task-edit" @click="editTask(index, todo)">Edit</button>
               <button id="task-delete" @click="removeTask(index)">Delete</button>
             </div>
           </div>
         </template>
       </div>
     </div>
+    <!-- <div id="modal" class="modal" ref="modal" @click.self="closeModal">
+      <div class="modal-content">
+        <span class="close" ref="close" @click.self="closeModal">&times;</span>
+        <p> testg123</p>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -36,18 +55,40 @@ export default {
   },
   data() {
     return {
-      todoTask: ['Take a bath', 'Eat breakfast', 'Jog'],
-      taskInput: ''
+      formValues: {
+        task: '',
+        category: ''
+      },
+      todoTask: [
+        {
+          task: 'Take a bath',
+          category: 'Leisure'
+        },
+        {
+          task: 'Take a bath',
+          category: 'Leisure'
+        },
+        {
+          task: 'Take a bath',
+          category: 'Leisure'
+        },
+      ],
+      categories: ['Urgent', 'Leisure', 'Exercise']
     }
   },
   methods: {
     addTask() {
-      this.todoTask.push(this.taskInput);
-      this.taskInput = '';
+      this.todoTask.push(this.formValues);
     },
     removeTask(index) {
       this.todoTask.splice(index, 1);
       console.log(this.todoTask);
+    },
+    editTask() {
+      this.$refs.modal.style.display = 'block';
+    },
+    closeModal() {
+      this.$refs.modal.style.display = 'none';
     }
   }
 }
@@ -87,7 +128,7 @@ body {
       display: flex;
       flex-direction: column;
       gap: .5em;
-
+      color: white;
 
       #todo-title {
         position: absolute;
@@ -99,13 +140,15 @@ body {
       }
       #task-input {
         border-radius: 4px;
-        padding: .5em;
         font-size: .9rem;
         font-weight: 900;
       }
 
-      #task-btn {
+      #task-category, #task-input, #task-btn  {
         padding: .5em;
+      }
+
+      #task-btn {
         border-radius: 4px;
         border: none;
         background-color: rgb(23, 93, 93);
@@ -136,14 +179,32 @@ body {
       .task-list {
         padding: .5em;
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        // align-items: center;
         border: 2px solid gray;
         border-radius: 8px;
 
-        .task-input {
-          margin: 0;
-          flex-grow: 1;
+
+        .task-info {
+          display: flex;
+          align-items: center;
+          border-bottom: 2px solid whitesmoke;
+          margin-bottom: .4em;
+          
+          .task-input {
+            margin: 0;
+            font-size: 120%;
+            font-weight: 900;
+            flex-grow: 1;
+          }
+
+          .task-cat {
+            font-size: 80%;
+            font-weight: 100;
+            color: gold;
+          }
         }
+        
 
         .task-control {
           display: flex;
@@ -155,16 +216,60 @@ body {
             background-color: transparent;
           }
 
-          #task-delete {
-            color: red;
+          #task-delete, #task-edit {
+            // color: red;
             text-transform: uppercase;
             font-size: .8em;
             font-weight: 900;
             cursor: pointer;
           }
+
+          #task-delete {
+            color: red;
+          }
+
+          #task-edit { 
+            color: greenyellow;
+          }
+        
         }
       }
     }
+  }
+
+  #modal {
+    // display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 80%;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%; /* Could be more or less, depending on screen size */
+      min-height: 80%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
   }
 }
 </style>
