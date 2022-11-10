@@ -4,9 +4,9 @@
     <div class="todo-list">
       <form class="todo-input" autocomplete="off" @submit.prevent="addTask">
         <p id="todo-title">Add new task</p>
-        <input type="text" name="task" id="task-input" v-model="formValues.task" required>
+        <input type="text" name="taskName" id="task-input" v-model="formValues.taskValue" required>
         <label for="task-category">Category:</label>
-        <select name="" id="task-category" v-model="formValues.category" required>
+        <select name="taskCat" id="task-category" v-model="formValues.categoryValue" required>
           <option  class=""
             v-for="(category, index) in categories" 
             :key="index" 
@@ -56,8 +56,8 @@ export default {
   data() {
     return {
       formValues: {
-        task: '',
-        category: ''
+        taskValue: '',
+        categoryValue: ''
       },
       todoTask: [
         {
@@ -65,12 +65,12 @@ export default {
           category: 'Leisure'
         },
         {
-          task: 'Take a bath',
-          category: 'Leisure'
+          task: 'Walk the dog',
+          category: 'Exercise'
         },
         {
-          task: 'Take a bath',
-          category: 'Leisure'
+          task: 'Do assignments',
+          category: 'Urgent'
         },
       ],
       categories: ['Urgent', 'Leisure', 'Exercise']
@@ -78,18 +78,23 @@ export default {
   },
   methods: {
     addTask() {
-      this.todoTask.push(this.formValues);
+      this.todoTask.push(
+        { task: this.formValues.taskValue, 
+          category: this.formValues.categoryValue 
+        });
+        this.formValues.taskValue = '';
+        this.formValues.categoryValue = '';
     },
     removeTask(index) {
       this.todoTask.splice(index, 1);
-      console.log(this.todoTask);
+      // console.log(this.todoTask);
     },
-    editTask() {
-      this.$refs.modal.style.display = 'block';
-    },
-    closeModal() {
-      this.$refs.modal.style.display = 'none';
-    }
+    // editTask() {
+    //   this.$refs.modal.style.display = 'block';
+    // },
+    // closeModal() {
+    //   this.$refs.modal.style.display = 'none';
+    // }
   }
 }
 
