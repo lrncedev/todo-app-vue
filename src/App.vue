@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <div class="localButtons">
+      <button class="save" @click="saveLocal">Save</button>
+      <button class="load" @click="loadLocal">Load</button>
+    </div>
     <h1 id="app-title">Todo Application</h1>
     <div class="todo-list">
       <form class="todo-input" autocomplete="off" @submit.prevent="addTask">
@@ -64,14 +68,14 @@ export default {
           task: 'Take a bath',
           category: 'Leisure'
         },
-        {
-          task: 'Walk the dog',
-          category: 'Exercise'
-        },
-        {
-          task: 'Do assignments',
-          category: 'Urgent'
-        },
+        // {
+        //   task: 'Walk the dog',
+        //   category: 'Exercise'
+        // },
+        // {
+        //   task: 'Do assignments',
+        //   category: 'Urgent'
+        // },
       ],
       categories: ['Urgent', 'Leisure', 'Exercise']
     }
@@ -89,6 +93,19 @@ export default {
       this.todoTask.splice(index, 1);
       // console.log(this.todoTask);
     },
+    saveLocal() {
+      console.log("Clicked");
+
+      const objectArr = JSON.stringify(this.todoTask);
+
+      localStorage.setItem('data', objectArr);
+      console.log("Parsed: ", JSON.parse(objectArr));
+    },
+    loadLocal() {
+      let storedArray = JSON.parse(localStorage.getItem("data"));
+      console.log(storedArray);
+      this.todoTask = storedArray;
+    }
     // editTask() {
     //   this.$refs.modal.style.display = 'block';
     // },
@@ -113,7 +130,38 @@ body {
 
 .container {
   padding: 1em 3em;
-  
+  position: relative;
+
+
+  .localButtons {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    display: flex;
+    gap: .4em;
+    z-index: 1;
+
+    > * {
+      padding: .4em;
+      background-color: transparent;
+      border: none;
+      text-transform: uppercase;
+      // border-bottom: 1px solid;
+      font-size: 1.2em;
+      border-radius: 4px;
+    }
+
+    .save {
+      background-color: #fad005;
+    }
+
+    .load {
+      background-color: blue;
+      color: white;
+    }
+    
+  }
 
   #app-title {
     text-align: center;
