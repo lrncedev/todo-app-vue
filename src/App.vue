@@ -1,8 +1,18 @@
 <template>
-  <div class="container">
-    <div class="localButtons">
+  <div class="side">
+    <div class="side-nav">
+      <nav class="router-nav">
+        <router-link to="/">🏠 Home</router-link>
+        <router-link to="/task">📃 Task</router-link>
+      </nav>
+    </div>
+    <div class="template-view">
+      <router-view />
+    </div>
+  </div>
+    <!-- <div class="localButtons">
       <button class="save" @click="saveLocal">Save</button>
-      <button class="load" @click="loadLocal">Load</button>
+      <button class="load" @click="loadLocal" :disabled="todoTask < 1">Load</button>
     </div>
     <h1 id="app-title">Todo Application</h1>
     <div class="todo-list">
@@ -41,33 +51,43 @@
           </div>
         </template>
       </div>
-    </div>
+    </div> -->
     <!-- <div id="modal" class="modal" ref="modal" @click.self="closeModal">
       <div class="modal-content">
         <span class="close" ref="close" @click.self="closeModal">&times;</span>
         <p> testg123</p>
       </div>
     </div> -->
-  </div>
+    <!-- <div id="modal" class="modal" ref="modal" @click.self="closeModal">
+      <div class="modal-content">
+        <span class="close" ref="close" @click.self="closeModal">&times;</span>
+        <p> testg123</p>
+      </div>
+    </div>
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/about">About</router-link>
+    </nav>
+    <router-view />
+  </div> -->
+  
 </template>
 
 <script>
-
-export default { 
-  name: 'App',
-  components: {
-  },
+export default {
+  name: "App",
+  components: {},
   data() {
     return {
       formValues: {
-        taskValue: '',
-        categoryValue: ''
+        taskValue: "",
+        categoryValue: "",
       },
       todoTask: [
-        {
-          task: 'Take a bath',
-          category: 'Leisure'
-        },
+        // {
+        //   task: 'Take a bath',
+        //   category: 'Leisure'
+        // },
         // {
         //   task: 'Walk the dog',
         //   category: 'Exercise'
@@ -77,17 +97,17 @@ export default {
         //   category: 'Urgent'
         // },
       ],
-      categories: ['Urgent', 'Leisure', 'Exercise']
-    }
+      categories: ["Urgent", "Leisure", "Exercise"],
+    };
   },
   methods: {
     addTask() {
-      this.todoTask.push(
-        { task: this.formValues.taskValue, 
-          category: this.formValues.categoryValue 
-        });
-        this.formValues.taskValue = '';
-        this.formValues.categoryValue = '';
+      this.todoTask.push({
+        task: this.formValues.taskValue,
+        category: this.formValues.categoryValue,
+      });
+      this.formValues.taskValue = "";
+      this.formValues.categoryValue = "";
     },
     removeTask(index) {
       this.todoTask.splice(index, 1);
@@ -98,40 +118,87 @@ export default {
 
       const objectArr = JSON.stringify(this.todoTask);
 
-      localStorage.setItem('data', objectArr);
+      localStorage.setItem("data", objectArr);
       console.log("Parsed: ", JSON.parse(objectArr));
     },
     loadLocal() {
       let storedArray = JSON.parse(localStorage.getItem("data"));
       console.log(storedArray);
       this.todoTask = storedArray;
-    }
+    },
     // editTask() {
     //   this.$refs.modal.style.display = 'block';
     // },
     // closeModal() {
     //   this.$refs.modal.style.display = 'none';
     // }
-  }
-}
-
+  },
+  mounted() {
+    this.loadLocal();
+  },
+};
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+}
 
 :root {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
   background-color: rgb(49, 49, 49);
+  color: white;
+  
+  .side {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    .side-nav {  
+      grid-area: 1 / 1 / 6 / 2; 
+      background-color:#000000;
+
+      .router-nav {
+        padding: 1em 1em;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        
+        a {
+          color:#f9f9f9;
+        }
+      }
+    }
+
+    .template-view { 
+      grid-area: 1 / 2 / 6 / 6;
+      background-color:#f3f3f3;
+      color:#5b5a5c;
+      .padding-md {
+        padding: 2em;
+      }
+    }
+  }
 }
 
 .container {
   padding: 1em 3em;
   position: relative;
-
 
   .localButtons {
     position: absolute;
@@ -139,11 +206,11 @@ body {
     top: 0;
 
     display: flex;
-    gap: .4em;
+    gap: 0.4em;
     z-index: 1;
 
     > * {
-      padding: .4em;
+      padding: 0.4em;
       background-color: transparent;
       border: none;
       text-transform: uppercase;
@@ -160,7 +227,13 @@ body {
       background-color: blue;
       color: white;
     }
-    
+
+    button[disabled="disabled"],
+    button:disabled {
+      // your css rules
+      background-color: gray;
+      color: wheat;
+    }
   }
 
   #app-title {
@@ -180,25 +253,27 @@ body {
       margin-inline: auto;
       display: flex;
       flex-direction: column;
-      gap: .5em;
+      gap: 0.5em;
       color: white;
 
       #todo-title {
         position: absolute;
         top: -30px;
         // text-transform: uppercase;
-        font-size: .9em;
+        font-size: 0.9em;
         color: white;
         left: 0;
       }
       #task-input {
         border-radius: 4px;
-        font-size: .9rem;
+        font-size: 0.9rem;
         font-weight: 900;
       }
 
-      #task-category, #task-input, #task-btn  {
-        padding: .5em;
+      #task-category,
+      #task-input,
+      #task-btn {
+        padding: 0.5em;
       }
 
       #task-btn {
@@ -206,7 +281,7 @@ body {
         border: none;
         background-color: rgb(23, 93, 93);
         color: white;
-        font-size: .8rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
         font-weight: 900;
       }
@@ -218,8 +293,7 @@ body {
       color: white;
       display: flex;
       flex-direction: column;
-      gap: .3em;
-
+      gap: 0.3em;
 
       .text-center {
         text-align: center;
@@ -230,20 +304,19 @@ body {
       }
 
       .task-list {
-        padding: .5em;
+        padding: 0.5em;
         display: flex;
         flex-direction: column;
         // align-items: center;
         border: 2px solid gray;
         border-radius: 8px;
 
-
         .task-info {
           display: flex;
           align-items: center;
           border-bottom: 2px solid whitesmoke;
-          margin-bottom: .4em;
-          
+          margin-bottom: 0.4em;
+
           .task-input {
             margin: 0;
             font-size: 120%;
@@ -257,22 +330,22 @@ body {
             color: gold;
           }
         }
-        
 
         .task-control {
           display: flex;
-          gap: .4em;
-          
+          gap: 0.4em;
+
           > * {
             height: 100%;
             border: none;
             background-color: transparent;
           }
 
-          #task-delete, #task-edit {
+          #task-delete,
+          #task-edit {
             // color: red;
             text-transform: uppercase;
-            font-size: .8em;
+            font-size: 0.8em;
             font-weight: 900;
             cursor: pointer;
           }
@@ -281,10 +354,9 @@ body {
             color: red;
           }
 
-          #task-edit { 
+          #task-edit {
             color: greenyellow;
           }
-        
         }
       }
     }
@@ -297,8 +369,8 @@ body {
     left: 0;
     width: 100%;
     min-height: 80%;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
     .modal-content {
       background-color: #fefefe;
@@ -322,7 +394,6 @@ body {
       text-decoration: none;
       cursor: pointer;
     }
-
   }
 }
 </style>
