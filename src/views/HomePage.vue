@@ -1,5 +1,5 @@
 <template >
-  <div class="full-height padding-md">
+  <div class="full-height padding-md hero-section">
     <div class="todo-intro">
       <h1>Todo Application</h1>
       <h2>A personal project for better task management in a browser application</h2>
@@ -49,7 +49,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: 45%;
+    width: 70%;
 
     h1 {
       font-weight: 900;
@@ -84,7 +84,12 @@ export default {
     position: absolute;
     right: 3%;
     z-index: 1;
-    top: 10%;
+    top: 20%;
   }
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
 }
 </style>
