@@ -5,35 +5,10 @@
       <h2>A personal project for better task management in a browser application</h2>
       <!-- <h3>- built with Vue JS, Vue Router 4, Scss and LocalStorage</h3> -->
       <div>
-        <router-link to="/task" class="btn">Try now</router-link>
+        <router-link to="/list" class="btn">Try now</router-link>
       </div>
     </div>
     <img src="https://ouch-cdn2.icons8.com/JoGv42xGg7mhJR1FwADWNMo5Qc3wRCJhwWk5IfHH5g8/rs:fit:512:384/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvODgz/LzIzOWRmMzBhLTc2/M2ItNDY1MC1hNzU0/LTAxMWNkMmU4NWE0/ZS5wbmc.png" alt="illustration photo" class="hero-photo">
-    
-    <!-- <div>asdas</div> -->
-    <!-- <div class="localButtons">
-      <button class="save" @click="saveLocal">Save</button>
-      <button class="load" @click="loadLocal" :disabled="todoTask < 1">Load</button>
-    </div>
-    <h1 id="app-title">Todo Application</h1> -->
-    
-    <!-- <div class="todo-list">
-      <form class="todo-input" autocomplete="off" @submit.prevent="addTask">
-        <p id="todo-title">Add new task</p>
-        <input type="text" name="taskName" id="task-input" v-model="formValues.taskValue" required>
-        <label for="task-category">Category:</label>
-        <select name="taskCat" id="task-category" v-model="formValues.categoryValue" required>
-          <option  class=""
-            v-for="(category, index) in categories" 
-            :key="index" 
-            :value="category" 
-          >
-            {{ category }}
-          </option>
-        </select>
-        <button type=submit id="task-btn">Add Task</button>
-      </form>
-    </div> -->
   </div>
 </template>
 <script>

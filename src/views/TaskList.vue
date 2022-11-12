@@ -1,6 +1,8 @@
 <template>
-  <div class="full-height padding-md task-list">
-    <FormComponent :formLabel="formLabel" v-model="modalShown"/>
+  <div class="full-height padding-md task-list" ref="task">
+    <template v-if="modalShown">
+      <FormComponent :formLabel="formLabel" class="modal" @click.self="this.modalShown = !this.modalShown"/>
+    </template>
     <div class="task-table">
       <div class="btn-add">
         <button @click="showModal">Add new task</button>
@@ -48,6 +50,8 @@ export default {
   methods: {
     showModal() {
       this.modalShown = !this.modalShown;
+      // this.$refs.task.style.backgroundColor = 'gray';
+      // this.$refs.task.style.filter = 'blur(3px)';
     }
   }
   
@@ -55,6 +59,16 @@ export default {
 </script>
 <style lang="scss">
 .task-list {
+  position: relative;
+
+  .modal {
+    position: absolute;
+
+    min-width: 40%;
+    z-index: 1;
+    right: 0%;
+    margin: 0 auto;
+  }
 
   .task-table {
     display: flex;
@@ -63,23 +77,23 @@ export default {
     
     .btn-add {
       align-self: flex-end;
+      
       margin-bottom: .7em;
 
       button {
         padding: .5em;
         background-color: green;
         color: white;
+        border: none;
         border-radius: 6px;
       }
     }
 
     table {
-      // table-layout: fixed;
       border: 1px solid gray;
       width: 100%;
       background-color: white;
       border-radius: 4px;
-
 
       .col-header {
         background-color: green;
