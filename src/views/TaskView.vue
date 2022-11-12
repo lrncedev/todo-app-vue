@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FormComponent />
+    <FormComponent :formLabel="formLabel"/>
   </div>
 </template>
 <script>
@@ -8,6 +8,15 @@ import FormComponent from '../components/FormComponent.vue'
 export default {
   components: {
     FormComponent
+  },
+  data() {
+    return {
+      formLabel: {
+        title: "Task Title",
+        description: "Task Description",
+        deadLine: "Task Deadline"
+      }
+    }
   }
 }
 </script>
