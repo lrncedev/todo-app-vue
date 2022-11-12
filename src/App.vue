@@ -3,12 +3,12 @@
     <div class="side-nav">
       <nav class="router-nav">
         <router-link to="/">Home</router-link>
-        <router-link to="/task">Create new task</router-link>
+        <!-- <router-link to="/task">Create new task</router-link> -->
         <router-link to="/list">Tasklist</router-link>
       </nav>
     </div>
     <div class="template-view">
-      <router-view />
+      <router-view :tasks="tasks"/>
     </div>
   </div>
     <!-- <div class="localButtons">
@@ -53,25 +53,6 @@
         </template>
       </div>
     </div> -->
-    <!-- <div id="modal" class="modal" ref="modal" @click.self="closeModal">
-      <div class="modal-content">
-        <span class="close" ref="close" @click.self="closeModal">&times;</span>
-        <p> testg123</p>
-      </div>
-    </div> -->
-    <!-- <div id="modal" class="modal" ref="modal" @click.self="closeModal">
-      <div class="modal-content">
-        <span class="close" ref="close" @click.self="closeModal">&times;</span>
-        <p> testg123</p>
-      </div>
-    </div>
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view />
-  </div> -->
-  
 </template>
 
 <script>
@@ -84,19 +65,22 @@ export default {
         taskValue: "",
         categoryValue: "",
       },
-      todoTask: [
-        // {
-        //   task: 'Take a bath',
-        //   category: 'Leisure'
-        // },
-        // {
-        //   task: 'Walk the dog',
-        //   category: 'Exercise'
-        // },
-        // {
-        //   task: 'Do assignments',
-        //   category: 'Urgent'
-        // },
+      tasks: [
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
       ],
       categories: ["Urgent", "Leisure", "Exercise"],
     };
