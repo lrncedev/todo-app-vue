@@ -1,16 +1,26 @@
 <template>
-  <div class="side">
+  <div class="app">
+    <nav>
+      <div class="logo"><router-link to="/">Test</router-link></div>
+      <div class="links">
+        <router-link to="/list">Tasks</router-link>
+        <router-link to="/list">About</router-link>
+      </div>
+    </nav>
+    <router-view />
+  </div>
+</template>
+  <!-- <div class="side">
     <div class="side-nav">
       <nav class="router-nav">
         <router-link to="/">Home</router-link>
-        <!-- <router-link to="/task">Create new task</router-link> -->
         <router-link to="/list">Tasklist</router-link>
       </nav>
     </div>
     <div class="template-view">
       <router-view/>
     </div>
-  </div>
+  </div> -->
     <!-- <div class="localButtons">
       <button class="save" @click="saveLocal">Save</button>
       <button class="load" @click="loadLocal" :disabled="todoTask < 1">Load</button>
@@ -53,8 +63,6 @@
         </template>
       </div>
     </div> -->
-</template>
-
 <script>
 export default {
   name: "App",
@@ -105,7 +113,8 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
 
 *,
 *::before,
@@ -119,245 +128,106 @@ export default {
 
 :root {
   font-family: "Roboto", sans-serif;
+
+  //COLORS
+  --main-color: #fafafa;
+  --accent-color: #E44232;
+  --comp-color: #FFF9F3;
+  //FONTS
+  --font-inter: 'Inter', sans-serif;
+
+  //FONT WEIGHT
+
 }
 
-body {
-  background-color: rgb(49, 49, 49);
-  color: white;
+.app {
+  background-color: var(--main-color);
   
-  .side {
-    display: grid;
-    height: 100vh;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-
-    .side-nav {  
-      grid-area: 1 / 1 / 6 / 2; 
-      background-color:#000000;
-
-      .router-nav {
-        padding: 1em 1em;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        
-        a {
-          color:#f9f9f9;
-        }
-      }
-    }
-
-    .template-view { 
-      grid-area: 1 / 2 / 6 / 6;
-      background-color:#f3f3f3;
-      color:#5b5a5c;
-      .padding-md {
-        padding: 2em;
-      }
-    }
-  }
-}
-
-.container {
-  padding: 1em 3em;
-  position: relative;
-
-  .localButtons {
-    position: absolute;
-    right: 0;
-    top: 0;
-
+  nav {
     display: flex;
-    gap: 0.4em;
-    z-index: 1;
-
-    > * {
-      padding: 0.4em;
-      background-color: transparent;
-      border: none;
-      text-transform: uppercase;
-      // border-bottom: 1px solid;
-      font-size: 1.2em;
-      border-radius: 4px;
-    }
-
-    .save {
-      background-color: #fad005;
-    }
-
-    .load {
-      background-color: blue;
-      color: white;
-    }
-
-    button[disabled="disabled"],
-    button:disabled {
-      // your css rules
-      background-color: gray;
-      color: wheat;
-    }
-  }
-
-  #app-title {
-    text-align: center;
-    text-transform: uppercase;
-    color: white;
-    margin-bottom: 1em;
-  }
-
-  .todo-list {
-    width: 60%;
+    align-items: center;
     margin-inline: auto;
+    padding: .5em 1em;
+    height: 40px;
+    color: white;
+    background-color: var(--accent-color);
 
-    .todo-input {
-      position: relative;
-      width: 50%;
-      margin-inline: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
+    a {
       color: white;
+    }
 
-      #todo-title {
-        position: absolute;
-        top: -30px;
-        // text-transform: uppercase;
-        font-size: 0.9em;
-        color: white;
-        left: 0;
-      }
-      #task-input {
-        border-radius: 4px;
-        font-size: 0.9rem;
-        font-weight: 900;
-      }
-
-      #task-category,
-      #task-input,
-      #task-btn {
-        padding: 0.5em;
-      }
-
-      #task-btn {
-        border-radius: 4px;
-        border: none;
-        background-color: rgb(23, 93, 93);
-        color: white;
-        font-size: 0.8rem;
+    .logo {
+      flex-grow: 1;
+      
+      a {
         text-transform: uppercase;
         font-weight: 900;
+        font-size: 200%;
       }
     }
 
-    .todo-task {
-      width: 50%;
-      margin-inline: auto;
-      color: white;
+    .links {
       display: flex;
-      flex-direction: column;
-      gap: 0.3em;
+      gap: 1em;
 
-      .text-center {
-        text-align: center;
-      }
-
-      h2 {
-        border-bottom: 3px solid whitesmoke;
-      }
-
-      .task-list {
-        padding: 0.5em;
-        display: flex;
-        flex-direction: column;
-        // align-items: center;
-        border: 2px solid gray;
-        border-radius: 8px;
-
-        .task-info {
-          display: flex;
-          align-items: center;
-          border-bottom: 2px solid whitesmoke;
-          margin-bottom: 0.4em;
-
-          .task-input {
-            margin: 0;
-            font-size: 120%;
-            font-weight: 900;
-            flex-grow: 1;
-          }
-
-          .task-cat {
-            font-size: 80%;
-            font-weight: 100;
-            color: gold;
-          }
-        }
-
-        .task-control {
-          display: flex;
-          gap: 0.4em;
-
-          > * {
-            height: 100%;
-            border: none;
-            background-color: transparent;
-          }
-
-          #task-delete,
-          #task-edit {
-            // color: red;
-            text-transform: uppercase;
-            font-size: 0.8em;
-            font-weight: 900;
-            cursor: pointer;
-          }
-
-          #task-delete {
-            color: red;
-          }
-
-          #task-edit {
-            color: greenyellow;
-          }
-        }
+      a {
+        font-weight: 600;
       }
     }
   }
 
-  #modal {
-    // display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 80%;
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  .hero {
+    padding: 4.5em;
+    margin-inline: auto;
+    height: calc(100vh - 40px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 80%;
 
-    .modal-content {
-      background-color: #fefefe;
-      margin: 10% auto; /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%; /* Could be more or less, depending on screen size */
-      min-height: 80%;
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.3em;
+
+      .heading {
+        font-weight: 900;
+        font-size: 350%;
+      }
+
+      .description {
+        font-family: var(--font-inter);
+        font-weight: 100;
+        font-size: 2em;
+        text-align: center;
+        color: rgb(104, 104, 104);
+      }
     }
 
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
+    .hero-img {
+      position: relative;
+      background-color: var(--comp-color);
+      border: 8px solid whitesmoke;
 
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
+      .hero-photo {
+        width: 100%;
+        position: absolute;
+        z-index: 1;
+        bottom: -130px;
+        right: -30px;
+      }
     }
+  }
+
+  .accent-btn {
+    background-color: var(--accent-color);
+    padding: .6em 1.2em;
+    font-family: var(--font-inter);
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    color: white;
   }
 }
 </style>
