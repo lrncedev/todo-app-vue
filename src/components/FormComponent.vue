@@ -59,13 +59,11 @@ export default {
   },
   methods: {
     addTask() {
-      console.log("FORM VALUES", this.formValues);
+      // console.log("FORM VALUES", this.formValues);
       this.$emit('sendPayload', this.formValues);
       // this.formValues.taskTitle = "";
       // this.formValues.taskDescription = "";
       // this.formValues.taskDeadline = "";
-
-      
     }
   }
 

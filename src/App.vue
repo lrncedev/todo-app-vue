@@ -8,7 +8,7 @@
       </nav>
     </div>
     <div class="template-view">
-      <router-view :tasks="tasks"/>
+      <router-view/>
     </div>
   </div>
     <!-- <div class="localButtons">
@@ -61,28 +61,7 @@ export default {
   components: {},
   data() {
     return {
-      formValues: {
-        taskValue: "",
-        categoryValue: "",
-      },
-      tasks: [
-        {
-          title: 'Project Initialization',
-          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
-          deadline: '02-18-1999'
-        },
-        {
-          title: 'Project Initialization',
-          description: 'Lorem ipsum dolor sit amet adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
-          deadline: '02-18-1999'
-        },
-        {
-          title: 'Project Initialization',
-          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
-          deadline: '02-18-1999'
-        },
-      ],
-      categories: ["Urgent", "Leisure", "Exercise"],
+
     };
   },
   methods: {
@@ -106,11 +85,11 @@ export default {
       localStorage.setItem("data", objectArr);
       console.log("Parsed: ", JSON.parse(objectArr));
     },
-    loadLocal() {
-      let storedArray = JSON.parse(localStorage.getItem("data"));
-      console.log(storedArray);
-      this.todoTask = storedArray;
-    },
+    // loadLocal() {
+    //   let storedArray = JSON.parse(localStorage.getItem("data"));
+    //   console.log(storedArray);
+    //   this.todoTask = storedArray;
+    // },
     // editTask() {
     //   this.$refs.modal.style.display = 'block';
     // },
@@ -119,7 +98,7 @@ export default {
     // }
   },
   mounted() {
-    this.loadLocal();
+    // this.loadLocal();
   },
 };
 </script>
