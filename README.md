@@ -1,5 +1,6 @@
-# app
-
+# Todo Application
+Simple Todo-Application based on Vue JS.
+A personal project for better task monitoring.
 ## Project setup
 ```
 npm install
