@@ -1,7 +1,7 @@
 <template>
   <div class="full-height padding-md task-list" ref="task">
     <template v-if="modalShown">
-      <FormComponent :formLabel="formLabel" class="modal" @click.self="this.modalShown = !this.modalShown"/>
+      <FormComponent :formLabel="formLabel" class="modal" @click.self="this.modalShown = !this.modalShown" @sendPayload="getPayload($event)" />
     </template>
     <div class="task-table">
       <div class="btn-add">
@@ -33,9 +33,9 @@ export default {
   components: {
     FormComponent
   },
-  props: {
-    tasks: { type: Array}
-  },
+  // props: {
+  //   tasks: { type: Array}
+  // },
   data() {
     return {
       formLabel: {
@@ -44,7 +44,24 @@ export default {
         deadLine: "Task Deadline"
       }, 
       tableValues: [],
-      modalShown: false
+      modalShown: false,
+      tasks: [
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
+        {
+          title: 'Project Initialization',
+          description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam ullam pariatur ratione aliquam.',
+          deadline: '02-18-1999'
+        },
+      ],
     }
   },
   methods: {
@@ -52,6 +69,14 @@ export default {
       this.modalShown = !this.modalShown;
       // this.$refs.task.style.backgroundColor = 'gray';
       // this.$refs.task.style.filter = 'blur(3px)';
+    },
+    getPayload(payload) {
+      this.tasks.push({
+        title: payload.taskTitle,
+        description: payload.taskDescription,
+        deadline: payload.taskDeadline
+      })
+      this.showModal();
     }
   }
   

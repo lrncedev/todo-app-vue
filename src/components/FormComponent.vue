@@ -26,7 +26,7 @@
         <div class="flex-2">
           <div>
             <label for="task-deadline">{{ formLabel.deadLine }}: </label>
-            <input type="date" id="task-deadline" name="task-deadline" v-model="formValues.taskDeadline"><!-- min="2018-01-01" max="2018-12-31" -->
+            <input type="date" id="task-deadline" name="task-deadline" v-model="formValues.taskDeadline" required><!-- min="2018-01-01" max="2018-12-31" -->
           </div>
         </div>
         <div class="form-control">
@@ -59,11 +59,13 @@ export default {
   },
   methods: {
     addTask() {
-      console.log(this.formValues);
+      console.log("FORM VALUES", this.formValues);
+      this.$emit('sendPayload', this.formValues);
+      // this.formValues.taskTitle = "";
+      // this.formValues.taskDescription = "";
+      // this.formValues.taskDeadline = "";
 
-      this.formValues.taskTitle = "";
-      this.formValues.taskDescription = "";
-      this.formValues.taskDeadline = "";
+      
     }
   }
 
