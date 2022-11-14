@@ -1,6 +1,35 @@
 <template>
-  <div class="full-height padding-md task-list" ref="task">
-    <template v-if="modalShown">
+  <div class="task-list" ref="task">
+    <div class="grid">
+      <div class="side">
+        <nav class="">
+          <div class="upper-link">
+            <router-link to="/list">
+              <font-awesome-icon class="fas" icon="fas fa-tasks" />
+              Tasks
+            </router-link>
+            <router-link to="/list">
+              <font-awesome-icon class="fas" icon="fas fa-exclamation-circle" />
+              Important
+            </router-link>
+            <router-link to="/list">
+              <font-awesome-icon class="fas" icon="fas fa-check-square" />
+              Accomplished
+            </router-link>
+          </div>
+          <div class="btn-last">
+            <router-link to="/home">
+              <font-awesome-icon class="fas" icon="fas fa-home" />
+              Home
+            </router-link>
+          </div>
+        </nav>
+      </div>
+      <div class="content">
+        <router-view/>
+      </div>
+    </div> 
+    <!-- <template v-if="modalShown">
       <FormComponent :formLabel="formLabel" class="modal" @click.self="this.modalShown = !this.modalShown" @sendPayload="getPayload($event)" />
     </template>
     <div class="task-table">
@@ -18,20 +47,23 @@
           <td>{{ task.title }}</td>
           <td class="task-desc">{{ task.description }}</td>
           <td>{{ task.deadline }}</td>
-          <td>
-            <button>Change</button>
-            <button>Delete</button>
+          <td >
+            <div class="task-btns">
+              <button class="edit">Edit</button>
+              <button class="delete">Delete</button>
+            </div>
+            
           </td>
         </tr>
       </table>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
-import FormComponent from '../components/FormComponent.vue'
+// import FormComponent from '../components/FormComponent.vue'
 export default {
   components: {
-    FormComponent
+    // FormComponent
   },
   // props: {
   //   tasks: { type: Array}
@@ -83,84 +115,170 @@ export default {
 }
 </script>
 <style lang="scss">
-.task-list {
-  position: relative;
+.grid {
+  display: grid;
+  height: calc(100vh - 40px);
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 
-  .modal {
-    position: absolute;
+  .side { 
+    grid-area: 1 / 1 / 6 / 2; 
+    padding: 1em;
+    background-color: #efefef;
 
-    min-width: 40%;
-    z-index: 1;
-    right: 0%;
-    margin: 0 auto;
-  }
-
-  .task-table {
-    display: flex;
-    flex-direction: column;
-    
-    
-    .btn-add {
-      align-self: flex-end;
-      
-      margin-bottom: .7em;
-
-      button {
-        padding: .5em;
-        background-color: green;
-        color: white;
-        border: none;
-        border-radius: 6px;
-      }
-    }
-
-    table {
-      border: 1px solid gray;
-      width: 100%;
+    nav {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      // padding: .8em 1em;
+      // border-radius: 10px;
       background-color: white;
-      border-radius: 4px;
+      // a {
+      //   color: white;
+      // }
 
-      .col-header {
-        background-color: green;
-        color: white;
 
-          .task-10 {
-            width: 10%;
-          }
-          .task-60 {
-            width: 60%;
-          }
-          .task-20 {
-            width: 20%;
-          }
+      a {
+        font-weight: 900;
+        font-size: 120%;
+        color: #E44232;
       }
-
-      td {
-        max-width: 0;
+      .upper-link {
+        display: flex;
+        padding: .8em 1em;
+        flex-direction: column;
+        gap: 1em;
+        font-size: 100%;
         
-      }
-      
-      th,td {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        border: 2px solid gray;
-        padding: .6em;
-      }
+        background-color: #FFF9F3;
 
-      th {
-        border: 2px solid #eee;
-      }
-
-      .task-content {
-        text-align: center;
-
-        .task-desc {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+        .fas {
+          font-size: 120%;
+          margin-right: .3em;
+        }
+        a {
+          color: #E44232;
+          font-weight: 900;
         }
       }
+      .btn-last {
+        padding: .8em 1em;
+        margin-top: auto;
+        background-color: #FFF9F3;
+      }
     }
   }
-} 
+  .content { grid-area: 1 / 2 / 6 / 6; } 
+}
+
+
+
+// .task-list {
+//   height: calc(100vh - 40px);
+//   padding: 2em;
+  
+
+  
+//   .modal {
+//     position: absolute;
+
+//     min-width: 40%;
+//     z-index: 1;
+//     right: 0%;
+//     margin: 0 auto;
+//   }
+
+//   .task-table {
+//     display: flex;
+//     flex-direction: column;
+    
+    
+//     .btn-add {
+//       align-self: flex-end;
+      
+//       margin-bottom: .7em;
+
+//       button {
+//         padding: .5em;
+//         background-color: green;
+//         color: white;
+//         border: none;
+//         border-radius: 6px;
+//       }
+//     }
+
+//     table {
+//       border: 1px solid gray;
+//       width: 100%;
+//       background-color: white;
+//       border-radius: 4px;
+
+//       .col-header {
+//         background-color: green;
+//         color: white;
+
+//           .task-10 {
+//             width: 10%;
+//           }
+//           .task-60 {
+//             width: 60%;
+//           }
+//           .task-20 {
+//             width: 20%;
+//           }
+//       }
+
+//       td {
+//         max-width: 0;
+        
+//       }
+      
+//       th,td {
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         border: 2px solid gray;
+//         padding: .6em;
+//       }
+
+//       th {
+//         border: 2px solid #eee;
+//       }
+
+//       .task-content {
+//         text-align: center;
+
+//         .task-desc {
+//           overflow: hidden;
+//           text-overflow: ellipsis;
+//           white-space: nowrap;
+//         }
+
+//         .task-btns {
+//           display: flex;
+//           gap: .3em;
+//           align-items: center;
+//           justify-content: center;
+
+//           button {
+//             padding: .3em;
+//             border-radius: 0;
+//             border: none;
+//             color: white;
+//             font-weight: 900;
+//           }
+
+//           .edit {
+//             background-color: blue;
+//           }
+//           .delete {
+//             background-color: red;
+//           }
+//         }
+//       }
+//     }
+//   }
+// } 
 </style>

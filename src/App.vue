@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <nav>
+    <nav class="app-nav">
       <div class="logo"><router-link to="/">Test</router-link></div>
       <div class="links">
         <router-link to="/list">Tasks</router-link>
@@ -143,7 +143,7 @@ export default {
 .app {
   background-color: var(--main-color);
   
-  nav {
+  .app-nav {
     display: flex;
     align-items: center;
     margin-inline: auto;
@@ -186,8 +186,9 @@ export default {
 
     .hero-text {
       display: flex;
+      padding-left: 2em;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       gap: 1.3em;
 
@@ -200,7 +201,6 @@ export default {
         font-family: var(--font-inter);
         font-weight: 100;
         font-size: 2em;
-        text-align: center;
         color: rgb(104, 104, 104);
       }
     }
@@ -223,6 +223,7 @@ export default {
   .accent-btn {
     background-color: var(--accent-color);
     padding: .6em 1.2em;
+    font-size: 120%;
     font-family: var(--font-inter);
     font-weight: 700;
     border: none;
