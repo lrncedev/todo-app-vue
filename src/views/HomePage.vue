@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     gotoTask() {
-      this.$router.push('/list')
+      this.$router.push('/task')
     }
   }
 }

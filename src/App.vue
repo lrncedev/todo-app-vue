@@ -1,9 +1,9 @@
 <template>
   <div class="app">
     <nav class="app-nav">
-      <div class="logo"><router-link to="/">Test</router-link></div>
+      <div class="logo"><router-link to="/">Unfinished</router-link></div>
       <div class="links">
-        <router-link to="/list">Tasks</router-link>
+        <router-link to="/task">Tasks</router-link>
         <router-link to="/list">About</router-link>
       </div>
     </nav>
@@ -116,6 +116,8 @@ export default {
 // @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
 
+@import '@/styles/_variables.scss';
+
 *,
 *::before,
 *::after {
@@ -129,38 +131,31 @@ export default {
 :root {
   font-family: "Roboto", sans-serif;
 
-  //COLORS
-  --main-color: #fafafa;
-  --accent-color: #E44232;
-  --comp-color: #FFF9F3;
-  //FONTS
   --font-inter: 'Inter', sans-serif;
-
-  //FONT WEIGHT
-
 }
 
 .app {
-  background-color: var(--main-color);
-  
+  background-color: $main-color;
+  color: $text-color;
+
   .app-nav {
     display: flex;
     align-items: center;
     margin-inline: auto;
-    padding: .5em 1em;
-    height: 40px;
-    color: white;
-    background-color: var(--accent-color);
+    padding: 1em 1em;
+    // height: 40px;
+    color: $text-color;
+    background-color: $main-color;
 
     a {
-      color: white;
+      color: $text-color;
     }
 
     .logo {
       flex-grow: 1;
       
       a {
-        text-transform: uppercase;
+        // text-transform: uppercase;
         font-weight: 900;
         font-size: 200%;
       }
@@ -179,7 +174,7 @@ export default {
   .hero {
     padding: 4.5em;
     margin-inline: auto;
-    height: calc(100vh - 40px);
+    height: calc(100vh - 70px);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 80%;
@@ -201,14 +196,13 @@ export default {
         font-family: var(--font-inter);
         font-weight: 100;
         font-size: 2em;
-        color: rgb(104, 104, 104);
+        color: $text-color;
       }
     }
 
     .hero-img {
       position: relative;
-      background-color: var(--comp-color);
-      border: 8px solid whitesmoke;
+      background-color: $second-accent;
 
       .hero-photo {
         width: 100%;
@@ -221,9 +215,9 @@ export default {
   }
 
   .accent-btn {
-    background-color: var(--accent-color);
+    background-color: $accent-color;
     padding: .6em 1.2em;
-    font-size: 120%;
+    font-size: 110%;
     font-family: var(--font-inter);
     font-weight: 700;
     border: none;

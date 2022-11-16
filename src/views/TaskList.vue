@@ -4,25 +4,25 @@
       <div class="side">
         <nav class="">
           <div class="upper-link">
-            <router-link to="/list">
+            <router-link to="/task">
               <font-awesome-icon class="fas" icon="fas fa-tasks" />
               Tasks
             </router-link>
-            <router-link to="/list">
+            <!-- <router-link to="/important">
               <font-awesome-icon class="fas" icon="fas fa-exclamation-circle" />
               Important
-            </router-link>
-            <router-link to="/list">
+            </router-link> -->
+            <router-link to="/accomplished">
               <font-awesome-icon class="fas" icon="fas fa-check-square" />
               Accomplished
             </router-link>
           </div>
-          <div class="btn-last">
-            <router-link to="/home">
+          <!-- <div class="btn-last">
+            <router-link to="/">
               <font-awesome-icon class="fas" icon="fas fa-home" />
               Home
             </router-link>
-          </div>
+          </div> -->
         </nav>
       </div>
       <div class="content">
@@ -115,9 +115,10 @@ export default {
 }
 </script>
 <style lang="scss">
+@import '@/styles/_variables.scss';
 .grid {
   display: grid;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 70px);
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);
   
@@ -127,41 +128,37 @@ export default {
   .side { 
     grid-area: 1 / 1 / 6 / 2; 
     padding: 1em;
+    height: 100%;
     background-color: #efefef;
 
     nav {
       display: flex;
       flex-direction: column;
       height: 100%;
-      // padding: .8em 1em;
-      // border-radius: 10px;
+    
       background-color: white;
-      // a {
-      //   color: white;
-      // }
-
 
       a {
         font-weight: 900;
-        font-size: 120%;
+        font-size: 105%;
         color: #E44232;
       }
+
       .upper-link {
         display: flex;
         padding: .8em 1em;
         flex-direction: column;
-        gap: 1em;
         font-size: 100%;
         
-        background-color: #FFF9F3;
+        background-color: $secondary-color;
 
         .fas {
           font-size: 120%;
           margin-right: .3em;
         }
         a {
-          color: #E44232;
-          font-weight: 900;
+          padding: .5em;
+          color: $text-color;
         }
       }
       .btn-last {
@@ -171,7 +168,15 @@ export default {
       }
     }
   }
-  .content { grid-area: 1 / 2 / 6 / 6; } 
+  .content { 
+    grid-area: 1 / 2 / 6 / 6; 
+    padding: 2em;
+    background: url("https://i.pinimg.com/736x/32/0a/ad/320aad83853f55e0b4d896113ffd7529.jpg");
+    // background-color: red;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+  } 
 }
 
 
