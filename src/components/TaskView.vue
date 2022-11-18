@@ -3,12 +3,25 @@
     <div class="task-header">
       <h1>Unfinished</h1>
       <div class="buttons">
-        <div>
-          <button class="btn-accent" @click="showModal">
-            <font-awesome-icon icon="fas fa-plus-circle" class="btn-control accent" /> New
-          </button> 
+        <div class="form-div">
+          <form autocomplete="off" @submit.prevent="addTask" class="task-form">
+            <div>
+              <!-- <label for="task-input">Task Input</label> -->
+              <input 
+                type="text" 
+                name="taskName" 
+                id="task-input" 
+                required 
+                placeholder="Create your tasks here! Example: Take a dump"
+                v-model="taskInput"
+              >
+              <button class="btn-accent" type="submit" >
+                <font-awesome-icon icon="fas fa-plus-circle" class="btn-control accent" /> New
+              </button> 
+            </div>
+          </form>
         </div>
-        <div>
+        <div class="top">
           <button class="btn-dark">
             <font-awesome-icon icon="fas fa-download" class="btn-control "/> Load
           </button>
@@ -26,10 +39,12 @@
         </div>
       </div>
     </div>
-    <template v-if="modalShown">
+    <div class="task-paginate">
+      <h1>Paginate</h1>
+    </div>
+    <!-- <template v-if="modalShown">
       <div id="task-form"  @click.self="showModal">   
-        <!-- <h1>Create new Task</h1>    -->
-        <form autocomplete="off" @submit.prevent="addTask" class="task-form">   
+        <form autocomplete="off" @submit.prevent="" class="task-form">   
           <div>
             <label for="task-input">Task Input</label>
             <input 
@@ -40,7 +55,7 @@
               placeholder="Ex. Initialize Project Development"
             >
           </div>
-          <!-- <label for="task-description">Task Description</label>
+          <label for="task-description">Task Description</label>
           <textarea 
           name="task-desc" 
           id="task-description" 
@@ -49,22 +64,20 @@
           placeholder="Comprehensive Description of the task"
           
           >
-          </textarea> -->
+          </textarea>
           
-          <!-- <div class="flex-2">
+          <div class="flex-2">
             <div>
               <label for="task-deadline">Task Deadline </label>
               <input type="date" id="task-deadline" name="task-deadline"  required>
             </div>
-          </div> -->
+          </div>
           <div class="form-control">
             <button type="submit" id="task-btn" class="">Create Task</button>
           </div>
         </form>
-      <!-- <h1>Test</h1> -->
       </div>
-      
-    </template>
+    </template> -->
   </div>
 </template>
 <script>
@@ -82,13 +95,19 @@ export default {
         'Curriculum Override',
         'Git Merge Fix'
       ],
-      modalShown: true
+      modalShown: false,
+      taskInput: '',
+      taskList: []
     }
   },
   methods: {
     showModal() {
       this.modalShown = !this.modalShown;
       console.log("test")
+    },
+    addTask() {
+      this.defaultTasks.push(this.taskInput);
+      this.taskInput = "";
     }
   }
 }
@@ -97,12 +116,16 @@ export default {
 @import '@/styles/_form.scss';
 @import '@/styles/_variables.scss';
 .task-view {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 
   .task-header {
     display: flex;
+    flex-direction: column;
     gap: .8em;
     color: white;
-    align-items: center;
+    // align-items: center;
     margin-bottom: 1.5em;
 
     h1 {
@@ -111,9 +134,37 @@ export default {
     
     .buttons {
       display: flex;
-      align-items: center;
+      width: 100%;
       gap: .8em;
+      position: relative;
 
+        .form-div {
+          display: flex;
+          align-items: center;
+          flex-grow: 1;
+          // background-color: yellow;
+
+          form {
+            width: 100%;
+          }
+          div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            #task-input {
+            padding: .3em;
+            width: 100%; 
+            }
+          }
+
+          
+        }
+
+        .top {
+          position: absolute;
+          top: -150%;
+          right: 0;
+        }
         button {
           display: flex;
           align-items: center;
@@ -185,13 +236,18 @@ export default {
     }
   }
 
+  .task-paginate {
+    background-color: black;
+    margin-top: auto;
+    // justify-self: end ;
+  }
   #task-form {
     background-color: #325b76;
 
-    .task-form {
-      width: 50%;
-      margin: 0 auto;
-    }
+    // .task-form {
+    //   width: 50%;
+    //   margin: 0 auto;
+    // }
   }
 }
 </style>
