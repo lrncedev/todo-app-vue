@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="task-list">
-      <div class="list-item" v-for="task in defaultTasks" :key="task">
+      <div class="list-item" v-for="task in paginated" :key="task">
         <div class="task-input" >
           <p>{{ task }}</p>
         </div>
@@ -40,7 +40,8 @@
       </div>
     </div>
     <div class="task-paginate">
-      <h1>Paginate</h1>
+      <button @click="prev" :disabled="current == 1"> Prev</button>
+      <button @click="next" :disabled="current == getPageLength"> Next </button>
     </div>
     <!-- <template v-if="modalShown">
       <div id="task-form"  @click.self="showModal">   
@@ -93,11 +94,23 @@ export default {
         'SCRUM Meeting with Team',
         'Client Task Fix',
         'Curriculum Override',
-        'Git Merge Fix'
+        'Git Merge Fix',
+        'Fix Pagination',
+        'Backlog Fix',
+        'Backup Prod Repository',
+        'Start the next project',
+        'Check SEO course',
+        'Fix Tire',
+        'Backlog Issue',
+        'Backup Repository',
+        'Start laravel project',
+        'Check Web Dev course',
       ],
       modalShown: false,
       taskInput: '',
-      taskList: []
+      // taskList: [],
+      current: 1,
+      pageSize: 6
     }
   },
   methods: {
@@ -108,8 +121,34 @@ export default {
     addTask() {
       this.defaultTasks.push(this.taskInput);
       this.taskInput = "";
+    },
+    prev() {
+      this.current--;
+      console.log(this.current);
+    },
+    next() {
+      this.current++;
+      console.log(this.current);
+    },
+    
+  },
+  computed: {
+    indexStart() {
+      return (this.current - 1) * this.pageSize;
+    },
+    indexEnd() {
+      return this.indexStart + this.pageSize;
+    },
+    paginated() {
+      return this.defaultTasks.slice(this.indexStart, this.indexEnd);
+    },
+    getPageLength() {
+      return Math.ceil(this.defaultTasks.length / this.pageSize);
     }
-  }
+  },
+  // mounted() {
+  //   this.getPageLength();
+  // }
 }
 </script>
 <style lang="scss">
@@ -120,6 +159,8 @@ export default {
   height: 100%;
   flex-direction: column;
 
+
+ 
   .task-header {
     display: flex;
     flex-direction: column;
@@ -237,8 +278,19 @@ export default {
   }
 
   .task-paginate {
-    background-color: black;
+    // background-color: black;
     margin-top: auto;
+    text-align: center;
+
+    button {
+      border: none;
+      // background-color: $accent-color;
+      // color: white;
+      padding: .4em .5em;
+      border-radius: 4px;
+      font-weight: 900;
+      margin-right: .5em;
+    }
     // justify-self: end ;
   }
   #task-form {
