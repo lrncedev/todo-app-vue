@@ -4,7 +4,7 @@
       <div class="logo"><router-link to="/">Unfinished</router-link></div>
       <div class="links">
         <router-link to="/task">Tasks</router-link>
-        <router-link to="/list">About</router-link>
+        <!-- <router-link to="/list">About</router-link> -->
       </div>
     </nav>
     <router-view />
