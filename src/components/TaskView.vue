@@ -6,7 +6,6 @@
         <div class="form-div">
           <form autocomplete="off" @submit.prevent="addTask" class="task-form">
             <div>
-              <!-- <label for="task-input">Task Input</label> -->
               <input 
                 type="text" 
                 name="taskName" 
@@ -22,15 +21,12 @@
           </form>
         </div>
         <div class="top">
-          <button class="btn-dark" @click="loadFromLocal">
+          <button class="btn-dark" @click="loadFromLocal" :disabled="isLocalEmpty === 0">
             <font-awesome-icon icon="fas fa-download" class="btn-control "/> Load
           </button>
-          <button class="btn-save" @click="saveToLocal">
+          <button class="btn-save" @click="saveToLocal" :disabled="isArrayEmpty">
             <font-awesome-icon icon="fas fa-save" class="btn-control "/> Save
           </button>
-        </div>
-        <div class="top-left">
-          
         </div>
       </div>
     </div>
@@ -72,12 +68,12 @@ export default {
   data() {
     return {
       defaultTasks: [
-        // 'SCRUM Meeting with Team',
-        // 'Client Task Fix',
-        // 'Curriculum Override',
-        // 'Git Merge Fix',
-        // 'Fix Pagination',
-        // 'Backlog Fix',
+        'SCRUM Meeting with Team',
+        'Client Task Fix',
+        'Curriculum Override',
+        'Git Merge Fix',
+        'Fix Pagination',
+        'Backlog Fix',
       ],
       modalShown: false,
       taskInput: '',
@@ -87,21 +83,15 @@ export default {
     }
   },
   methods: {
-    showModal() {
-      this.modalShown = !this.modalShown;
-      console.log("test")
-    },
     addTask() {
       this.defaultTasks.push(this.taskInput);
       this.taskInput = "";
     },
     prev() {
       this.current--;
-      console.log(this.current);
     },
     next() {
       this.current++;
-      console.log(this.current);
     },
     saveToLocal() {
       this.showToast();
@@ -115,6 +105,13 @@ export default {
 
       localStorage.setItem("data", objectArr);
       console.log("Parsed: ", JSON.parse(objectArr));
+      location.reload();
+    },
+    loadFromLocal() {
+      let storedArray = JSON.parse(localStorage.getItem("data"));
+      console.log(storedArray);
+      this.defaultTasks = [...storedArray];
+      console.log("NEW DEFAULT TASKS", this.defaultTasks);
     },
     showToast() {
       this.$refs.toast.classList.add("show");
@@ -122,13 +119,23 @@ export default {
         this.$refs.toast.classList.remove("show");
       }, 2000);
     },
-    loadFromLocal() {
-      console.log("clicked");
-      let storedArray = JSON.parse(localStorage.getItem("data"));
-      console.log(storedArray);
-      this.defaultTasks = [...storedArray];
-      // console.log(this.defaultTasks);
-    },
+    checkLocalStorage() {
+      const LOCAL_SIZE = window.localStorage.length;
+
+      console.log("local storage size: ",LOCAL_SIZE);
+
+      if(LOCAL_SIZE != 0 ) {
+        if (localStorage.getItem("data") === null) {
+          console.log("Data Key is NULL")
+        }else{
+          console.log('data key is not empty');
+          this.loadFromLocal();
+        }
+      }
+      else {
+        console.log("localstorage EMPTY");
+      }
+    }
   },
   computed: {
     indexStart() {
@@ -150,11 +157,14 @@ export default {
       else {
         return false;
       }
+    },
+    isLocalEmpty() {
+      return window.localStorage.length;
     }
   },
-  // mounted() {
-  //   this.loadFromLocal();
-  // }
+  mounted() {
+    this.checkLocalStorage();
+  }
 }
 </script>
 <style lang="scss">
@@ -230,6 +240,10 @@ export default {
 
         .btn-accent {
           background-color: $accent-color;
+        }
+
+        button[disabled] {
+          background-color: gray;
         }
 
         .btn-dark {
