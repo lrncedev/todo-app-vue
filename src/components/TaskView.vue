@@ -73,15 +73,15 @@ export default {
         'Curriculum Override',
         'Git Merge Fix',
         'Fix Pagination',
-        'Backlog Fix',
-        'Backup Prod Repository',
-        'Start the next project',
-        'Check SEO course',
-        'Fix Tire',
-        'Backlog Issue',
-        'Backup Repository',
-        'Start laravel project',
-        'Check Web Dev course',
+        // 'Backlog Fix',
+        // 'Backup Prod Repository',
+        // 'Start the next project',
+        // 'Check SEO course',
+        // 'Fix Tire',
+        // 'Backlog Issue',
+        // 'Backup Repository',
+        // 'Start laravel project',
+        // 'Check Web Dev course',
       ],
       modalShown: false,
       taskInput: '',
@@ -113,7 +113,7 @@ export default {
 
       localStorage.setItem("data", objectArr);
       // console.log("Parsed: ", JSON.parse(objectArr));
-      location.reload();
+      this.$router.push('/todo-app-vue/task')
     },
     loadFromLocal() {
       let storedArray = JSON.parse(localStorage.getItem("data"));

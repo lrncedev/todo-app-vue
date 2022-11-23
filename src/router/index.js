@@ -20,13 +20,12 @@ const routes = [
     component: Home
   },
   {
-    path: '/todo-app-vue/task',
-    name: 'TaskView',
+    path: '/todo-app-vue/',
+    redirect: { name: 'NewTask',},
     component: TaskList,
     props: true,
     children: [
-      { path: '', name: 'NewTask', component: TaskView },
-      // { path: '/important', name: 'ImportantTask', component: ImportantTask },
+      { path: '/todo-app-vue/task', name: 'NewTask', component: TaskView },
       { path: '/todo-app-vue/accomplished', name: 'AccomplishedTask', component: AccomplishedTask }
     ],
   },
