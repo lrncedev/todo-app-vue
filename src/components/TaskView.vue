@@ -74,6 +74,14 @@ export default {
         'Git Merge Fix',
         'Fix Pagination',
         'Backlog Fix',
+        'Backup Prod Repository',
+        'Start the next project',
+        'Check SEO course',
+        'Fix Tire',
+        'Backlog Issue',
+        'Backup Repository',
+        'Start laravel project',
+        'Check Web Dev course',
       ],
       modalShown: false,
       taskInput: '',
@@ -104,14 +112,14 @@ export default {
       const objectArr = JSON.stringify(this.defaultTasks);
 
       localStorage.setItem("data", objectArr);
-      console.log("Parsed: ", JSON.parse(objectArr));
+      // console.log("Parsed: ", JSON.parse(objectArr));
       location.reload();
     },
     loadFromLocal() {
       let storedArray = JSON.parse(localStorage.getItem("data"));
-      console.log(storedArray);
+      // console.log(storedArray);
       this.defaultTasks = [...storedArray];
-      console.log("NEW DEFAULT TASKS", this.defaultTasks);
+      // console.log("NEW DEFAULT TASKS", this.defaultTasks);
     },
     showToast() {
       this.$refs.toast.classList.add("show");
@@ -122,18 +130,18 @@ export default {
     checkLocalStorage() {
       const LOCAL_SIZE = window.localStorage.length;
 
-      console.log("local storage size: ",LOCAL_SIZE);
+      // console.log("local storage size: ",LOCAL_SIZE);
 
       if(LOCAL_SIZE != 0 ) {
         if (localStorage.getItem("data") === null) {
-          console.log("Data Key is NULL")
+          // console.log("Data Key is NULL")
         }else{
-          console.log('data key is not empty');
+          // console.log('data key is not empty');
           this.loadFromLocal();
         }
       }
       else {
-        console.log("localstorage EMPTY");
+        // console.log("localstorage EMPTY");
       }
     }
   },
