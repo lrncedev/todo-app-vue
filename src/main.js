@@ -13,12 +13,12 @@ import { FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 // import { faHtml5, faCss3, faJs, faVuejs, faGit, faSass, faFacebookF, faLinkedinIn, faCodepen, faTwitter, faGithub, faNodeJs, faNode, faPhp} from '@fortawesome/free-brands-svg-icons'
 
 /* FREE SOLID SVG */
-import { faBars, faSquareCheck, faExclamationCircle, faTasks, faHome, faPlusCircle, faDownload} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faSquareCheck, faExclamationCircle, faTasks, faHome, faPlusCircle, faDownload, faSave} from '@fortawesome/free-solid-svg-icons'
 
 /* add icons to the library */
 
 // library.add( faHtml5, faCss3, faJs, faVuejs, faGit, faSass, faFacebookF, faLinkedinIn, faCodepen, faTwitter,faBars ,faGithub, faNodeJs, faNode, faPhp, faSquareCheck)
 
-library.add(faSquareCheck, faBars, faExclamationCircle, faTasks, faHome, faPlusCircle, faDownload)
+library.add(faSquareCheck, faBars, faExclamationCircle, faTasks, faHome, faPlusCircle, faDownload, faSave)
 // createApp(App).use(router).mount('#app')
 createApp(App).use(router).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
