@@ -22,7 +22,7 @@
           </form>
         </div>
         <div class="top">
-          <button class="btn-dark">
+          <button class="btn-dark" @click="loadFromLocal">
             <font-awesome-icon icon="fas fa-download" class="btn-control "/> Load
           </button>
           <button class="btn-save" @click="saveToLocal">
@@ -35,60 +35,33 @@
       </div>
     </div>
     <div class="task-list">
-      <div class="list-item" v-for="task in paginated" :key="task">
-        <div class="task-input" >
-          <p>{{ task }}</p>
+      <template v-if="isArrayEmpty">
+        <div class="text-center">
+          <h1 class="">No tasks to do for now 😁</h1>
         </div>
-        <div class="task-control">
-          <button class="btn-success">Mark as Done</button>
-          <!-- <button class="btn-danger">Remove</button> -->
+      </template>
+      <template v-else>
+        <div class="list-item" v-for="task in paginated" :key="task">
+          <div class="task-input" >
+            <p>{{ task }}</p>
+          </div>
+          <div class="task-control">
+            <button class="btn-success">Mark as Done</button>
+          </div>
         </div>
+      </template>
+
+    </div>
+    <template v-if="!isArrayEmpty">
+      <div class="task-paginate">
+        <button @click="prev" :disabled="current == 1"> Prev</button>
+        Page {{ current }} of {{ getPageLength }}
+        <button @click="next" :disabled="current == getPageLength"> Next </button>
       </div>
-    </div>
-    <div class="task-paginate">
-      <button @click="prev" :disabled="current == 1"> Prev</button>
-      Page {{ current }} of {{ getPageLength }}
-      <button @click="next" :disabled="current == getPageLength"> Next </button>
-    </div>
+    </template>
     <div class="toast" ref="toast">
       <h3>Saved to Local Storage</h3>
     </div>
-    <!-- <template v-if="modalShown">
-      <div id="task-form"  @click.self="showModal">   
-        <form autocomplete="off" @submit.prevent="" class="task-form">   
-          <div>
-            <label for="task-input">Task Input</label>
-            <input 
-              type="text" 
-              name="taskName" 
-              id="task-input" 
-              required 
-              placeholder="Ex. Initialize Project Development"
-            >
-          </div>
-          <label for="task-description">Task Description</label>
-          <textarea 
-          name="task-desc" 
-          id="task-description" 
-          cols="30" 
-          rows="10" 
-          placeholder="Comprehensive Description of the task"
-          
-          >
-          </textarea>
-          
-          <div class="flex-2">
-            <div>
-              <label for="task-deadline">Task Deadline </label>
-              <input type="date" id="task-deadline" name="task-deadline"  required>
-            </div>
-          </div>
-          <div class="form-control">
-            <button type="submit" id="task-btn" class="">Create Task</button>
-          </div>
-        </form>
-      </div>
-    </template> -->
   </div>
 </template>
 <script>
@@ -99,12 +72,12 @@ export default {
   data() {
     return {
       defaultTasks: [
-        'SCRUM Meeting with Team',
-        'Client Task Fix',
-        'Curriculum Override',
-        'Git Merge Fix',
-        'Fix Pagination',
-        'Backlog Fix',
+        // 'SCRUM Meeting with Team',
+        // 'Client Task Fix',
+        // 'Curriculum Override',
+        // 'Git Merge Fix',
+        // 'Fix Pagination',
+        // 'Backlog Fix',
       ],
       modalShown: false,
       taskInput: '',
@@ -131,27 +104,31 @@ export default {
       console.log(this.current);
     },
     saveToLocal() {
-      console.log("Clicked");
-
       this.showToast();
       setTimeout(() => {
-  
         this.$refs.toast.classList.add("hide");
+        
       }, 2000);
-
       this.$refs.toast.classList.remove("hide");
-      // const objectArr = JSON.stringify(this.defaultTasks);
 
-      // localStorage.setItem("data", objectArr);
-      // console.log("Parsed: ", JSON.parse(objectArr));
+      const objectArr = JSON.stringify(this.defaultTasks);
+
+      localStorage.setItem("data", objectArr);
+      console.log("Parsed: ", JSON.parse(objectArr));
     },
     showToast() {
       this.$refs.toast.classList.add("show");
       setTimeout(() => {
         this.$refs.toast.classList.remove("show");
       }, 2000);
-    }
-    
+    },
+    loadFromLocal() {
+      console.log("clicked");
+      let storedArray = JSON.parse(localStorage.getItem("data"));
+      console.log(storedArray);
+      this.defaultTasks = [...storedArray];
+      // console.log(this.defaultTasks);
+    },
   },
   computed: {
     indexStart() {
@@ -165,10 +142,18 @@ export default {
     },
     getPageLength() {
       return Math.ceil(this.defaultTasks.length / this.pageSize);
+    },
+    isArrayEmpty() {
+      if(Array.isArray(this.defaultTasks) && this.defaultTasks.length == 0){
+        return true;
+      }
+      else {
+        return false;
+      }
     }
   },
   // mounted() {
-  //   this.getPageLength();
+  //   this.loadFromLocal();
   // }
 }
 </script>
@@ -263,6 +248,12 @@ export default {
     display: flex;
     flex-direction: column;
     gap: .3em;
+
+    .text-center {
+      text-align: center;
+      font-size: 120%;
+      margin-top: 10%;
+    }
     
     .list-item {  
       display: flex;
@@ -328,7 +319,6 @@ export default {
     right: 0;
     overflow: hidden;
     opacity: 1;
-    // display: none;
     text-align: center;
     width: 20%;
     background-color: rgb(14, 143, 14);
@@ -355,15 +345,6 @@ export default {
     100% {
       transform: translateY(300%);
     }
-    // 40% {
-    //   transform: translateY(-5%);
-    // }
-    // 80% {
-    //   transform: translateY(0%);
-    // }
-    // 100% {
-    //   transform: translateY(-5px);
-    // }
   }
   .toast.hide {
     animation: hide 1s ease forwards;
