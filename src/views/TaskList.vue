@@ -4,7 +4,7 @@
       <div class="side">
         <nav class="">
           <div class="upper-link">
-            <router-link to="/task">
+            <router-link to="/todo-app-vue/task">
               <font-awesome-icon class="fas" icon="fas fa-tasks" />
               Tasks
             </router-link>
@@ -12,17 +12,11 @@
               <font-awesome-icon class="fas" icon="fas fa-exclamation-circle" />
               Important
             </router-link> -->
-            <router-link to="/accomplished">
+            <router-link to="/todo-app-vue/accomplished">
               <font-awesome-icon class="fas" icon="fas fa-check-square" />
               Accomplished
             </router-link>
           </div>
-          <!-- <div class="btn-last">
-            <router-link to="/">
-              <font-awesome-icon class="fas" icon="fas fa-home" />
-              Home
-            </router-link>
-          </div> -->
         </nav>
       </div>
       <div class="content">

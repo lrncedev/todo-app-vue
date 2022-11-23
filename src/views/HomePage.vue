@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     gotoTask() {
-      this.$router.push('/task')
+      this.$router.push('/todo-app-vue/task')
     }
   }
 }

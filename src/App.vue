@@ -3,18 +3,19 @@
     <nav class="app-nav">
       <div class="logo"><router-link to="/">Unfinished</router-link></div>
       <div class="links">
-        <router-link to="/task">Tasks</router-link>
+        <router-link to="/todo-app-vue/task">Tasks</router-link>
       </div>
     </nav>
-    <HomePage/>
+    <!-- <HomePage/> -->
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import HomePage from './views/HomePage.vue';
+// import HomePage from './views/HomePage.vue';
 export default {
   name: "App",
   components: {
-    HomePage
+    // HomePage
   },
   data() {
     return {
