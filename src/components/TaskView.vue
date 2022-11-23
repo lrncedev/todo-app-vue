@@ -25,6 +25,12 @@
           <button class="btn-dark">
             <font-awesome-icon icon="fas fa-download" class="btn-control "/> Load
           </button>
+          <button class="btn-save" @click="saveToLocal">
+            <font-awesome-icon icon="fas fa-save" class="btn-control "/> Save
+          </button>
+        </div>
+        <div class="top-left">
+          
         </div>
       </div>
     </div>
@@ -41,7 +47,11 @@
     </div>
     <div class="task-paginate">
       <button @click="prev" :disabled="current == 1"> Prev</button>
+      Page {{ current }} of {{ getPageLength }}
       <button @click="next" :disabled="current == getPageLength"> Next </button>
+    </div>
+    <div class="toast" ref="toast">
+      <h3>Saved to Local Storage</h3>
     </div>
     <!-- <template v-if="modalShown">
       <div id="task-form"  @click.self="showModal">   
@@ -82,11 +92,9 @@
   </div>
 </template>
 <script>
-// import FormComponent from '../components/FormComponent.vue'
 export default {
   name: 'NewTask',
   components: {
-    // FormComponent
   },
   data() {
     return {
@@ -97,14 +105,6 @@ export default {
         'Git Merge Fix',
         'Fix Pagination',
         'Backlog Fix',
-        'Backup Prod Repository',
-        'Start the next project',
-        'Check SEO course',
-        'Fix Tire',
-        'Backlog Issue',
-        'Backup Repository',
-        'Start laravel project',
-        'Check Web Dev course',
       ],
       modalShown: false,
       taskInput: '',
@@ -130,6 +130,27 @@ export default {
       this.current++;
       console.log(this.current);
     },
+    saveToLocal() {
+      console.log("Clicked");
+
+      this.showToast();
+      setTimeout(() => {
+  
+        this.$refs.toast.classList.add("hide");
+      }, 2000);
+
+      this.$refs.toast.classList.remove("hide");
+      // const objectArr = JSON.stringify(this.defaultTasks);
+
+      // localStorage.setItem("data", objectArr);
+      // console.log("Parsed: ", JSON.parse(objectArr));
+    },
+    showToast() {
+      this.$refs.toast.classList.add("show");
+      setTimeout(() => {
+        this.$refs.toast.classList.remove("show");
+      }, 2000);
+    }
     
   },
   computed: {
@@ -159,8 +180,6 @@ export default {
   height: 100%;
   flex-direction: column;
 
-
- 
   .task-header {
     display: flex;
     flex-direction: column;
@@ -197,15 +216,16 @@ export default {
             width: 100%; 
             }
           }
-
-          
         }
 
         .top {
+          display: flex;
+          gap: 1em;
           position: absolute;
           top: -150%;
           right: 0;
         }
+
         button {
           display: flex;
           align-items: center;
@@ -230,6 +250,10 @@ export default {
         .btn-dark {
           background-color: gold;
           color: black;
+        }
+        .btn-save {
+          background-color: green;
+          color: white;
         }
     }
     
@@ -281,6 +305,10 @@ export default {
     // background-color: black;
     margin-top: auto;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
 
     button {
       border: none;
@@ -289,17 +317,65 @@ export default {
       padding: .4em .5em;
       border-radius: 4px;
       font-weight: 900;
-      margin-right: .5em;
+      // margin-right: .5em;
     }
     // justify-self: end ;
   }
-  #task-form {
-    background-color: #325b76;
 
-    // .task-form {
-    //   width: 50%;
-    //   margin: 0 auto;
+  .toast {
+    position: absolute;
+    top: -100px;
+    right: 0;
+    overflow: hidden;
+    opacity: 1;
+    // display: none;
+    text-align: center;
+    width: 20%;
+    background-color: rgb(14, 143, 14);
+    padding: 1em .5em;
+    font-weight: 100;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .toast.show {
+    animation: display 1s ease-in forwards;
+  }
+
+  @keyframes display {
+    0% {
+      transform: translateY(0);
+    }
+    // 25% {
+    //   transform: translateY(150%);
     // }
+    // 50% {
+    //   transform: translateY(150%);
+    // }
+    100% {
+      transform: translateY(300%);
+    }
+    // 40% {
+    //   transform: translateY(-5%);
+    // }
+    // 80% {
+    //   transform: translateY(0%);
+    // }
+    // 100% {
+    //   transform: translateY(-5px);
+    // }
+  }
+  .toast.hide {
+    animation: hide 1s ease forwards;
+  }
+
+  @keyframes hide {
+    0% {
+      transform: translateY(300%);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 }
 </style>
