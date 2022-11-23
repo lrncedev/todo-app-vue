@@ -7,22 +7,51 @@ import TaskList from '@/views/TaskList.vue';
 /* Nested Children Components */
 import TaskView from '@/components/TaskView.vue';
 import AccomplishedTask from '@/components/AccomplishedTask.vue';
-import ImportantTask from '@/components/ImportantTask.vue';
+// import ImportantTask from '@/components/ImportantTask.vue';
+
 const routes = [
-  { 
-    path: '/', 
-    component: Home 
+  {
+    path: '/',
+    redirect: { name: 'Home' }
   },
-  { 
-    path: '/task', 
+  {
+    path: '/todo-app-vue/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/todo-app-vue/task',
     name: 'TaskView',
     component: TaskList,
+    props: true,
     children: [
       { path: '', name: 'NewTask', component: TaskView },
-      { path: '/important', name: 'ImportantTask', component: ImportantTask },
-      { path: '/accomplished', name: 'AccomplishedTask', component: AccomplishedTask }
+      // { path: '/important', name: 'ImportantTask', component: ImportantTask },
+      { path: '/todo-app-vue/accomplished', name: 'AccomplishedTask', component: AccomplishedTask }
     ],
   },
+  // {
+  //   path: '/todo-app-vue/accomplished',
+  //   name: 'AccomplishedTask', 
+  //   component: AccomplishedTask,
+  //   children: [
+  //     { path: '', name: 'AccomplishedTask', component: AccomplishedTask},
+  //   ],
+  // },
+  // { 
+  //   path: '/', 
+  //   component: Home 
+  // },
+  // { 
+  //   path: '/task', 
+  //   name: 'TaskView',
+  //   component: TaskList,
+  //   children: [
+  //     { path: '', name: 'NewTask', component: TaskView },
+  //     { path: '/important', name: 'ImportantTask', component: ImportantTask },
+  //     { path: '/accomplished', name: 'AccomplishedTask', component: AccomplishedTask }
+  //   ],
+  // },
   // { 
   //   path: '/important', 
   //   component: TaskList,
