@@ -6,26 +6,39 @@
         <div class="form-div">
           <form autocomplete="off" @submit.prevent="addTask" class="task-form">
             <div>
-              <input 
-                type="text" 
-                name="taskName" 
-                id="task-input" 
-                required 
+              <input
+                type="text"
+                name="taskName"
+                id="task-input"
+                required
                 placeholder="Create your tasks here! Example: Take a dump"
                 v-model="taskInput"
-              >
-              <button class="btn-accent" type="submit" >
-                <font-awesome-icon icon="fas fa-plus-circle" class="btn-control accent" /> New
-              </button> 
+              />
+              <button class="btn-accent" type="submit">
+                <font-awesome-icon
+                  icon="fas fa-plus-circle"
+                  class="btn-control accent"
+                />
+                New
+              </button>
             </div>
           </form>
         </div>
         <div class="top">
-          <button class="btn-dark" @click="loadFromLocal" :disabled="isLocalEmpty === 0">
-            <font-awesome-icon icon="fas fa-download" class="btn-control "/> Load
+          <button
+            class="btn-dark"
+            @click="loadFromLocal"
+            :disabled="isLocalEmpty === 0"
+          >
+            <font-awesome-icon icon="fas fa-download" class="btn-control" />
+            Load
           </button>
-          <button class="btn-save" @click="saveToLocal" :disabled="isArrayEmpty">
-            <font-awesome-icon icon="fas fa-save" class="btn-control "/> Save
+          <button
+            class="btn-save"
+            @click="saveToLocal"
+            :disabled="isArrayEmpty"
+          >
+            <font-awesome-icon icon="fas fa-save" class="btn-control" /> Save
           </button>
         </div>
       </div>
@@ -37,22 +50,23 @@
         </div>
       </template>
       <template v-else>
-        <div class="list-item" v-for="task in paginated" :key="task">
-          <div class="task-input" >
+        <div class="list-item" v-for="(task, index) in paginated" :key="task">
+          <div class="task-input">
             <p>{{ task }}</p>
           </div>
           <div class="task-control">
-            <button class="btn-success">Mark as Done</button>
+            <button class="btn-success" @click="done(index, task)">
+              Mark as Done
+            </button>
           </div>
         </div>
       </template>
-
     </div>
     <template v-if="!isArrayEmpty">
       <div class="task-paginate">
-        <button @click="prev" :disabled="current == 1"> Prev</button>
+        <button @click="prev" :disabled="current == 1">Prev</button>
         Page {{ current }} of {{ getPageLength }}
-        <button @click="next" :disabled="current == getPageLength"> Next </button>
+        <button @click="next" :disabled="current == getPageLength">Next</button>
       </div>
     </template>
     <div class="toast" ref="toast">
@@ -62,17 +76,17 @@
 </template>
 <script>
 export default {
-  name: 'NewTask',
-  components: {
-  },
+  name: "NewTask",
+  components: {},
+
   data() {
     return {
       defaultTasks: [
-        'SCRUM Meeting with Team',
-        'Client Task Fix',
-        'Curriculum Override',
-        'Git Merge Fix',
-        'Fix Pagination',
+        "SCRUM Meeting with Team",
+        "Client Task Fix",
+        "Curriculum Override",
+        "Git Merge Fix",
+        "Fix Pagination",
         // 'Backlog Fix',
         // 'Backup Prod Repository',
         // 'Start the next project',
@@ -84,11 +98,12 @@ export default {
         // 'Check Web Dev course',
       ],
       modalShown: false,
-      taskInput: '',
+      taskInput: "",
       // taskList: [],
       current: 1,
-      pageSize: 6
-    }
+      pageSize: 6,
+      accomplishedTask: [],
+    };
   },
   methods: {
     addTask() {
@@ -105,7 +120,6 @@ export default {
       this.showToast();
       setTimeout(() => {
         this.$refs.toast.classList.add("hide");
-        
       }, 2000);
       this.$refs.toast.classList.remove("hide");
 
@@ -113,7 +127,7 @@ export default {
 
       localStorage.setItem("data", objectArr);
       // console.log("Parsed: ", JSON.parse(objectArr));
-      this.$router.push('/todo-app-vue/task')
+      this.$router.push("/todo-app-vue/task");
     },
     loadFromLocal() {
       let storedArray = JSON.parse(localStorage.getItem("data"));
@@ -132,18 +146,34 @@ export default {
 
       // console.log("local storage size: ",LOCAL_SIZE);
 
-      if(LOCAL_SIZE != 0 ) {
+      if (LOCAL_SIZE != 0) {
         if (localStorage.getItem("data") === null) {
           // console.log("Data Key is NULL")
-        }else{
+        } else {
           // console.log('data key is not empty');
           this.loadFromLocal();
         }
-      }
-      else {
+      } else {
         // console.log("localstorage EMPTY");
       }
-    }
+    },
+    done(index, task) {
+      // const currentDate = new Date();
+      // console.log(currentDate);
+      let currentDateWithFormat = new Date()
+        .toJSON()
+        .slice(0, 10)
+        .replace(/-/g, "-");
+      // console.log(currentDateWithFormat);
+      // console.log(task);
+      this.accomplishedTask.push({
+        taskDescription: task,
+        accomplishedDate: currentDateWithFormat,
+      });
+      this.$emit("accomplishedTask", this.accomplishedTask);
+      // console.log("Tasks done: ", this.accomplishedTask);
+      this.defaultTasks.splice(index, 1);
+    },
   },
   computed: {
     indexStart() {
@@ -159,25 +189,24 @@ export default {
       return Math.ceil(this.defaultTasks.length / this.pageSize);
     },
     isArrayEmpty() {
-      if(Array.isArray(this.defaultTasks) && this.defaultTasks.length == 0){
+      if (Array.isArray(this.defaultTasks) && this.defaultTasks.length == 0) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     },
     isLocalEmpty() {
       return window.localStorage.length;
-    }
+    },
   },
   mounted() {
     this.checkLocalStorage();
-  }
-}
+  },
+};
 </script>
 <style lang="scss">
-@import '@/styles/_form.scss';
-@import '@/styles/_variables.scss';
+@import "@/styles/_form.scss";
+@import "@/styles/_variables.scss";
 .task-view {
   display: flex;
   height: 100%;
@@ -186,7 +215,7 @@ export default {
   .task-header {
     display: flex;
     flex-direction: column;
-    gap: .8em;
+    gap: 0.8em;
     color: white;
     // align-items: center;
     margin-bottom: 1.5em;
@@ -194,95 +223,94 @@ export default {
     h1 {
       flex-grow: 1;
     }
-    
+
     .buttons {
       display: flex;
       width: 100%;
-      gap: .8em;
+      gap: 0.8em;
       position: relative;
 
-        .form-div {
+      .form-div {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        // background-color: yellow;
+
+        form {
+          width: 100%;
+        }
+        div {
           display: flex;
           align-items: center;
-          flex-grow: 1;
-          // background-color: yellow;
-
-          form {
+          justify-content: center;
+          #task-input {
+            padding: 0.3em;
             width: 100%;
           }
-          div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            #task-input {
-            padding: .3em;
-            width: 100%; 
-            }
-          }
         }
+      }
 
-        .top {
-          display: flex;
-          gap: 1em;
-          position: absolute;
-          top: -150%;
-          right: 0;
-        }
+      .top {
+        display: flex;
+        gap: 1em;
+        position: absolute;
+        top: -150%;
+        right: 0;
+      }
 
-        button {
-          display: flex;
-          align-items: center;
-          gap: .4em;
-          
-          border: none;
-          border-radius: 3px;
-          cursor: pointer;
-          padding: .4em 1em;
-          color: white;
-          font-weight: 500;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 0.4em;
 
-          .btn-control {
-            font-size: 150%;
-          }  
-        }
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        padding: 0.4em 1em;
+        color: white;
+        font-weight: 500;
 
-        .btn-accent {
-          background-color: $accent-color;
+        .btn-control {
+          font-size: 150%;
         }
+      }
 
-        button[disabled] {
-          background-color: gray;
-        }
+      .btn-accent {
+        background-color: $accent-color;
+      }
 
-        .btn-dark {
-          background-color: gold;
-          color: black;
-        }
-        .btn-save {
-          background-color: green;
-          color: white;
-        }
+      button[disabled] {
+        background-color: gray;
+      }
+
+      .btn-dark {
+        background-color: gold;
+        color: black;
+      }
+      .btn-save {
+        background-color: green;
+        color: white;
+      }
     }
-    
   }
 
   .task-list {
     display: flex;
     flex-direction: column;
-    gap: .3em;
+    gap: 0.3em;
 
     .text-center {
       text-align: center;
       font-size: 120%;
       margin-top: 10%;
     }
-    
-    .list-item {  
+
+    .list-item {
       display: flex;
       align-items: center;
       background-color: white;
-      padding: .8em;
-      
+      padding: 0.8em;
+
       border-radius: 3px;
       font-size: 120%;
       color: $secondary-color;
@@ -292,12 +320,12 @@ export default {
       }
       .task-control {
         display: flex;
-        gap: .5em;
-        
+        gap: 0.5em;
+
         button {
           border: none;
           font-size: 80%;
-          padding: .4em .2em;
+          padding: 0.4em 0.2em;
           border-radius: 3px;
           background-color: transparent;
           color: $text-color;
@@ -321,13 +349,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: .5em;
+    gap: 0.5em;
 
     button {
       border: none;
       // background-color: $accent-color;
       // color: white;
-      padding: .4em .5em;
+      padding: 0.4em 0.5em;
       border-radius: 4px;
       font-weight: 900;
       // margin-right: .5em;
@@ -344,7 +372,7 @@ export default {
     text-align: center;
     width: 20%;
     background-color: rgb(14, 143, 14);
-    padding: 1em .5em;
+    padding: 1em 0.5em;
     font-weight: 100;
     border-radius: 5px;
     text-align: center;
