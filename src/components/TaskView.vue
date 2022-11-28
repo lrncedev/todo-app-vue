@@ -1,7 +1,7 @@
 <template>
   <div class="task-view">
     <div class="task-header">
-      <h1>Unfinished</h1>
+      <h1>Tasks</h1>
       <div class="buttons">
         <div class="form-div">
           <form autocomplete="off" @submit.prevent="addTask" class="task-form">
